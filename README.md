@@ -2,13 +2,15 @@
 
 [<img src="https://img.shields.io/badge/license-MIT-blue">](https://github.com/luchris429/FastJaxRL)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/luchris429/FastJaxRL/examples/example_0.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/luchris429/FastJaxRL/blob/main/examples/example_0.ipynb)
 
 FastJaxRL is a high-performance, end-to-end Jax Reinforcement Learning (RL) implementation, including the environment. By running entirely on the accelerator, we leverage Jax's vectorization capabilities and overcome the bottlenecks of CPU-GPU data transfer and Python overhead. This results in significant speedups, easier debugging, and fully synchronous operation. For more details, visit the accompanying blog post: https://chrislu.page/blog/meta-disco/
 
+This notebook walks through the basic usage: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/luchris429/FastJaxRL/blob/main/examples/example_0.ipynb)
+
 ## Performance
 
-Our implementation runs 10x faster than CleanRL's PyTorch baselines, as shown in the single-thread performance plot.
+Our implementation runs 10x faster than [CleanRL's PyTorch baselines](https://github.com/vwxyzjn/cleanrl/blob/master/cleanrl/ppo.py), as shown in the single-thread performance plot.
 
 Cartpole                   |  Minatar-Breakout
 :-------------------------:|:-------------------------:
@@ -24,7 +26,7 @@ Cartpole                   |  Minatar-Breakout
 
 ## Code Philosophy
 
-FastJaxRL is inspired by CleanRL, providing high-quality single-file implementations with research-friendly features. Note that it is not a modular library and is not meant to be imported. The repository focuses on simplicity and clarity in its implementations, making it an excellent resource for researchers and practitioners alike.
+FastJaxRL is inspired by [CleanRL](https://github.com/vwxyzjn/cleanrl), providing high-quality single-file implementations with research-friendly features. Like CleanRL, this is not a modular library and is not meant to be imported. The repository focuses on simplicity and clarity in its implementations, making it an excellent resource for researchers and practitioners.
 
 ## Installation
 
@@ -34,7 +36,7 @@ pip install -r requirements.txt
 
 ## Example Usage
 
-Check out the example notebook examples.ipynb for basic usage of FastJaxRL. You can open it in Google Colab to start experimenting.
+This [`examples/example_0.ipynb`](https://github.com/luchris429/FastJaxRL/blob/main/examples/example_0.ipynb) walks through the basic usage. You can open it directly in colab using this: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/luchris429/FastJaxRL/blob/main/examples/example_0.ipynb)
 
 ## TODOs
 
