@@ -8,7 +8,7 @@ from typing import Sequence, NamedTuple, Any
 from flax.training.train_state import TrainState
 import distrax
 import gymnax
-from wrappers import LogWrapper, FlattenObservation
+from wrappers import LogWrapper, FlattenObservation # TODO: Update on Gymnax release
 
 class ActorCritic(nn.Module):
     action_dim: Sequence[int]

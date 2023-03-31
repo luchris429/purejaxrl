@@ -1,3 +1,8 @@
+"""
+This is a temporary file that has been integrated into gymnax. 
+This file will be removed upon the next gymnax pypi release.
+https://github.com/RobertTLange/gymnax/blob/main/gymnax/utils/wrappers.py
+"""
 import jax
 import jax.numpy as jnp
 import chex
