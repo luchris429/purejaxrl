@@ -1,12 +1,18 @@
-# JitRL (End-to-End RL Algortihms in Pure Jax)
+# PureJaxRL (End-to-End RL Algortihms in Pure Jax)
 
-[<img src="https://img.shields.io/badge/license-MIT-blue">](https://github.com/luchris429/jitrl)
+[<img src="https://img.shields.io/badge/license-MIT-blue">](https://github.com/luchris429/purejaxrl)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/luchris429/jitrl/blob/main/examples/example_0.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/luchris429/purejaxrl/blob/main/examples/example_0.ipynb)
 
-JitRL is a high-performance, end-to-end Jax Reinforcement Learning (RL) implementation. By running entirely on the accelerator, including the environment, we leverage Jax's vectorization capabilities and overcome the bottlenecks of CPU-GPU data transfer and Python overhead. This results in significant speedups, easier debugging, and fully synchronous operation. This code allows you to use jax to `jit`, `vmap`, `pmap`, and `scan` entire RL training pipelines. For more details, visit the accompanying blog post: https://chrislu.page/blog/meta-disco/
+PureJaxRL is a high-performance, end-to-end Jax Reinforcement Learning (RL) implementation. By running everything entirely on the accelerator, including the environment, we leverage Jax's vectorization capabilities and overcome the bottlenecks of CPU-GPU data transfer and Python overhead. This results in significant speedups, easier debugging, and fully synchronous operation. This code allows you to use jax to `jit`, `vmap`, `pmap`, and `scan` entire RL training pipelines. With this, we can:
 
-This notebook walks through the basic usage: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/luchris429/jitrl/blob/main/examples/example_0.ipynb)
+- 🏃 Efficiently run tons of seeds in parallel on one GPU!
+- 💻 Perform rapid hyperparameter tuning!
+- 🦎 Discover new RL algorithms with meta-evolution!
+
+For more details, visit the accompanying blog post: https://chrislu.page/blog/meta-disco/
+
+This notebook walks through the basic usage: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/luchris429/purejaxrl/blob/main/examples/example_0.ipynb)
 
 ## Performance
 
@@ -17,16 +23,16 @@ Cartpole                   |  Minatar-Breakout
 ![](docs/cartpole_plot_seconds.png)  |  ![](docs/minatar_plot_seconds.png)
 
 
-The vectorized agent training allows for simultaneous training across multiple seeds, rapid hyperparameter tuning, and even evolutionary Meta-RL. With vectorized training, we can train 2048 PPO agents in half the time it takes to train a single PyTorch PPO agent.
+The vectorized agent training allows for simultaneous training across multiple seeds, rapid hyperparameter tuning, and even evolutionary Meta-RL. With vectorized training, we can train 2048 PPO agents in half the time it takes to train a single PyTorch PPO agent on a single GPU.
 
-Cartpole                   |  Minatar-Breakout
+Vectorised Cartpole        |  Vectorised Minatar-Breakout
 :-------------------------:|:-------------------------:
 ![](docs/cartpole_plot_parallel.png)  |  ![](docs/minatar_plot_parallel.png)
 
 
 ## Code Philosophy
 
-JitRL is inspired by [CleanRL](https://github.com/vwxyzjn/cleanrl), providing high-quality single-file implementations with research-friendly features. Like CleanRL, this is not a modular library and is not meant to be imported. The repository focuses on simplicity and clarity in its implementations, making it an excellent resource for researchers and practitioners.
+PureJaxRL is inspired by [CleanRL](https://github.com/vwxyzjn/cleanrl), providing high-quality single-file implementations with research-friendly features. Like CleanRL, this is not a modular library and is not meant to be imported. The repository focuses on simplicity and clarity in its implementations, making it an excellent resource for researchers and practitioners.
 
 ## Installation
 
@@ -36,13 +42,13 @@ pip install -r requirements.txt
 
 ## Example Usage
 
-[`examples/example_0.ipynb`](https://github.com/luchris429/jitrl/blob/main/examples/example_0.ipynb) walks through the basic usage. 
+[`examples/example_0.ipynb`](https://github.com/luchris429/purejaxrl/blob/main/examples/example_0.ipynb) walks through the basic usage. 
 
-You can open it directly in colab using this: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/luchris429/jitrl/blob/main/examples/example_0.ipynb)
+You can open it directly in colab using this: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/luchris429/purejaxrl/blob/main/examples/example_0.ipynb)
 
 ## TODOs
 
-The following improvements are planned for the JitRL repository:
+The following improvements are planned for the PureJaxRL repository:
 
 1. More memory-efficient logging
 2. Integration with Weights & Biases (WandB) for experiment tracking
@@ -51,7 +57,7 @@ The following improvements are planned for the JitRL repository:
 
 ## Related Work
 
-JitRL builds upon other tools in the Jax and RL ecosystems. Check out the following projects:
+PureJaxRL builds upon other tools in the Jax and RL ecosystems. Check out the following projects:
 
 - Gymnax (https://github.com/RobertTLange/gymnax)
 - Evosax (https://github.com/RobertTLange/evosax)
@@ -61,7 +67,7 @@ JitRL builds upon other tools in the Jax and RL ecosystems. Check out the follow
 
 ## Citation
 
-If you use JitRL in your work, please cite the following paper:
+If you use PureJaxRL in your work, please cite the following paper:
 
 ```
 @article{lu2022discovered,
