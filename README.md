@@ -1,14 +1,14 @@
-# PureJaxRL (End-to-End RL Algortihms in Pure Jax)
+# PureJaxRL (End-to-End RL Training in Pure Jax)
 
 [<img src="https://img.shields.io/badge/license-MIT-blue">](https://github.com/luchris429/purejaxrl)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/luchris429/purejaxrl/blob/main/examples/example_0.ipynb)
 
-PureJaxRL is a high-performance, end-to-end Jax Reinforcement Learning (RL) implementation. By running everything entirely on the accelerator, including the environment, we leverage Jax's vectorization capabilities and overcome the bottlenecks of CPU-GPU data transfer and Python overhead. This results in significant speedups, easier debugging, and fully synchronous operation. This code allows you to use jax to `jit`, `vmap`, `pmap`, and `scan` entire RL training pipelines. With this, we can:
+PureJaxRL is a high-performance, end-to-end Jax Reinforcement Learning (RL) implementation. When running many agents in parallel on GPUs, our implementation is over 1000x faster than standard PyTorch RL implementations. Unlike other Jax RL implementations, we implement the *entire training pipeline in JAX*, including the environment. This allows us to get significant speedups through JIT compilation and by avoiding CPU-GPU data transfer. It also results in easier debugging because the system is fully synchronous. More importantly, this code allows you to use jax to `jit`, `vmap`, `pmap`, and `scan` entire RL training pipelines. With this, we can:
 
-- 🏃 Efficiently run tons of seeds in parallel on one GPU!
-- 💻 Perform rapid hyperparameter tuning!
-- 🦎 Discover new RL algorithms with meta-evolution!
+- 🏃 Efficiently run tons of seeds in parallel on one GPU
+- 💻 Perform rapid hyperparameter tuning
+- 🦎 Discover new RL algorithms with meta-evolution
 
 For more details, visit the accompanying blog post: https://chrislu.page/blog/meta-disco/
 
@@ -16,14 +16,14 @@ This notebook walks through the basic usage: [![Open In Colab](https://colab.res
 
 ## Performance
 
-Our implementation runs 10x faster than [CleanRL's PyTorch baselines](https://github.com/vwxyzjn/cleanrl/blob/master/cleanrl/ppo.py), as shown in the single-thread performance plot.
+Without vectorization, our implementation runs 10x faster than [CleanRL's PyTorch baselines](https://github.com/vwxyzjn/cleanrl/blob/master/cleanrl/ppo.py), as shown in the single-thread performance plot.
 
 Cartpole                   |  Minatar-Breakout
 :-------------------------:|:-------------------------:
 ![](docs/cartpole_plot_seconds.png)  |  ![](docs/minatar_plot_seconds.png)
 
 
-The vectorized agent training allows for simultaneous training across multiple seeds, rapid hyperparameter tuning, and even evolutionary Meta-RL. With vectorized training, we can train 2048 PPO agents in half the time it takes to train a single PyTorch PPO agent on a single GPU.
+With vectorized training, we can train 2048 PPO agents in half the time it takes to train a single PyTorch PPO agent on a single GPU. The vectorized agent training allows for simultaneous training across multiple seeds, rapid hyperparameter tuning, and even evolutionary Meta-RL. 
 
 Vectorised Cartpole        |  Vectorised Minatar-Breakout
 :-------------------------:|:-------------------------:
@@ -38,7 +38,9 @@ PureJaxRL is inspired by [CleanRL](https://github.com/vwxyzjn/cleanrl), providin
 
 Install dependencies using the requirements.txt file:
 
+```
 pip install -r requirements.txt
+```
 
 ## Example Usage
 
