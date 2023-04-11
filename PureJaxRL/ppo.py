@@ -67,6 +67,11 @@ def make_train(config):
     env, env_params = gymnax.make(config["ENV_NAME"])
     env = FlattenObservation(env)
     env = LogWrapper(env)
+
+    def linear_schedule(count):
+        frac = 1.0 - (count // (config["NUM_MINIBATCHES"] * config["UPDATE_EPOCHS"])) / config["NUM_UPDATES"]
+        return config["LR"] * frac
+
     def train(rng):
 
         # INIT NETWORK
@@ -76,7 +81,9 @@ def make_train(config):
         network_params = network.init(_rng, init_x)
         tx = optax.chain(
             optax.clip_by_global_norm(config["MAX_GRAD_NORM"]),
-            optax.adam(config["LR"], eps=1e-5),
+            optax.inject_hyperparams(optax.adam)(
+                learning_rate=linear_schedule if config["ANNEAL_LR"] else config["LR"], eps=1e-5
+            ),
         )
         train_state = TrainState.create(
             apply_fn=network.apply,
