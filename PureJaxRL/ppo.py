@@ -8,7 +8,7 @@ from typing import Sequence, NamedTuple, Any
 from flax.training.train_state import TrainState
 import distrax
 import gymnax
-from wrappers import LogWrapper, FlattenObservation # TODO: Update on Gymnax release
+from gymnax.wrappers.purerl import LogWrapper, FlattenObservationWrapper
 
 class ActorCritic(nn.Module):
     action_dim: Sequence[int]
@@ -65,7 +65,7 @@ def make_train(config):
         config["NUM_ENVS"] * config["NUM_STEPS"] // config["NUM_MINIBATCHES"]
     )
     env, env_params = gymnax.make(config["ENV_NAME"])
-    env = FlattenObservation(env)
+    env = FlattenObservationWrapper(env)
     env = LogWrapper(env)
 
     def linear_schedule(count):
@@ -79,12 +79,13 @@ def make_train(config):
         rng, _rng = jax.random.split(rng)
         init_x = jnp.zeros(env.observation_space(env_params).shape)
         network_params = network.init(_rng, init_x)
-        tx = optax.chain(
-            optax.clip_by_global_norm(config["MAX_GRAD_NORM"]),
-            optax.inject_hyperparams(optax.adam)(
-                learning_rate=linear_schedule if config["ANNEAL_LR"] else config["LR"], eps=1e-5
-            ),
-        )
+        if config["ANNEAL_LR"]:
+            tx = optax.chain(
+                optax.clip_by_global_norm(config["MAX_GRAD_NORM"]),
+                optax.adam(learning_rate=linear_schedule, eps=1e-5),
+            )
+        else:
+            tx = optax.chain(optax.clip_by_global_norm(config["MAX_GRAD_NORM"]), optax.adam(config["LR"], eps=1e-5))
         train_state = TrainState.create(
             apply_fn=network.apply,
             params=network_params,
@@ -267,6 +268,7 @@ if __name__ == "__main__":
         "MAX_GRAD_NORM": 0.5,
         "ACTIVATION": "tanh",
         "ENV_NAME": "CartPole-v1",
+        "ANNEAL_LR": True,
     }
     rng = jax.random.PRNGKey(30)
     train_jit = jax.jit(make_train(config))
