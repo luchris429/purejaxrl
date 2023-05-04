@@ -54,8 +54,7 @@ The following improvements are planned for the PureJaxRL repository:
 
 1. More memory-efficient logging
 2. Integration with Weights & Biases (WandB) for experiment tracking
-3. Continuous PPO for Brax
-5. Connecting to non-Jax environments like envpool
+3. Connecting to non-Jax environments like envpool
 
 ## Related Work
 
