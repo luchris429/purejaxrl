@@ -1,6 +1,6 @@
 # PureJaxRL (End-to-End RL Training in Pure Jax)
 
-[<img src="https://img.shields.io/badge/license-MIT-blue">](https://github.com/luchris429/purejaxrl)
+[<img src="https://img.shields.io/badge/license-Apache2.0-blue.svg">](https://github.com/luchris429/purejaxrl/LICENSE)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/luchris429/purejaxrl/blob/main/examples/example_0.ipynb)
 
@@ -44,9 +44,9 @@ pip install -r requirements.txt
 
 ## Example Usage
 
-[`examples/example_0.ipynb`](https://github.com/luchris429/purejaxrl/blob/main/examples/example_0.ipynb) walks through the basic usage. 
+[`examples/example_0.ipynb`](https://github.com/luchris429/purejaxrl/blob/main/examples/example_0.ipynb) walks through the basic usage. [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/luchris429/purejaxrl/blob/main/examples/example_0.ipynb)
 
-You can open it directly in colab using this: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/luchris429/purejaxrl/blob/main/examples/example_0.ipynb)
+[`examples/example_1.ipynb`](https://github.com/luchris429/purejaxrl/blob/main/examples/example_1.ipynb) walks through using PureJaxRL for Brax and MinAtar. [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/luchris429/purejaxrl/blob/main/examples/example_1.ipynb)
 
 ## TODOs
 
