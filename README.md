@@ -2,7 +2,7 @@
 
 [<img src="https://img.shields.io/badge/license-Apache2.0-blue.svg">](https://github.com/luchris429/purejaxrl/LICENSE)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/luchris429/purejaxrl/blob/main/examples/example_0.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/luchris429/purejaxrl/blob/main/examples/walkthrough.ipynb)
 
 PureJaxRL is a high-performance, end-to-end Jax Reinforcement Learning (RL) implementation. When running many agents in parallel on GPUs, our implementation is over 1000x faster than standard PyTorch RL implementations. Unlike other Jax RL implementations, we implement the *entire training pipeline in JAX*, including the environment. This allows us to get significant speedups through JIT compilation and by avoiding CPU-GPU data transfer. It also results in easier debugging because the system is fully synchronous. More importantly, this code allows you to use jax to `jit`, `vmap`, `pmap`, and `scan` entire RL training pipelines. With this, we can:
 
@@ -42,11 +42,13 @@ Install dependencies using the requirements.txt file:
 pip install -r requirements.txt
 ```
 
+In order to use JAX on your accelerators, you can find more details in the [JAX documentation](https://github.com/google/jax#installation).
+
 ## Example Usage
 
-[`examples/example_0.ipynb`](https://github.com/luchris429/purejaxrl/blob/main/examples/example_0.ipynb) walks through the basic usage. [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/luchris429/purejaxrl/blob/main/examples/example_0.ipynb)
+[`examples/walkthrough.ipynb`](https://github.com/luchris429/purejaxrl/blob/main/examples/walkthrough.ipynb) walks through the basic usage. [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/luchris429/purejaxrl/blob/main/examples/walkthrough.ipynb)
 
-[`examples/example_1.ipynb`](https://github.com/luchris429/purejaxrl/blob/main/examples/example_1.ipynb) walks through using PureJaxRL for Brax and MinAtar. [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/luchris429/purejaxrl/blob/main/examples/example_1.ipynb)
+[`examples/brax_minatar.ipynb`](https://github.com/luchris429/purejaxrl/blob/main/examples/brax_minatar.ipynb) walks through using PureJaxRL for Brax and MinAtar. [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/luchris429/purejaxrl/blob/main/examples/brax_minatar.ipynb)
 
 ## TODOs
 
@@ -65,6 +67,7 @@ PureJaxRL builds upon other tools in the Jax and RL ecosystems. Check out the fo
 - CleanRL (https://github.com/vwxyzjn/cleanrl)
 - Brax (https://github.com/google/brax)
 - Jumanji (https://github.com/instadeepai/jumanji)
+- Pgx (https://github.com/sotetsuk/pgx)
 
 ## Citation
 

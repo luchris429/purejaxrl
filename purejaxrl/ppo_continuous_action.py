@@ -7,40 +7,15 @@ from flax.linen.initializers import constant, orthogonal
 from typing import Sequence, NamedTuple, Any
 from flax.training.train_state import TrainState
 import distrax
-from gymnax.environments import environment, spaces
-from brax import envs
-from gymnax.wrappers.purerl import LogWrapper, FlattenObservationWrapper
+from wrappers import (
+    LogWrapper,
+    BraxGymnaxWrapper,
+    VecEnv,
+    NormalizeVecObservation,
+    NormalizeVecReward,
+    ClipAction,
+)
 
-class BraxGymnaxWrapper:
-    def __init__(self, env_name, backend="positional"):
-        env = envs.get_environment(env_name=env_name, backend=backend)
-        env = envs.wrapper.EpisodeWrapper(env, episode_length=1000, action_repeat=1)
-        env = envs.wrapper.AutoResetWrapper(env)
-        self._env = env
-        self.action_size = env.action_size
-        self.observation_size = (env.observation_size,)
-    
-    def reset(self, key, params=None):
-        state = self._env.reset(key)
-        return state.obs, state
-    
-    def step(self, key, state, action, params=None):
-        next_state = self._env.step(state, action)
-        return next_state.obs, next_state, next_state.reward, next_state.done > 0.5, {}
-    
-    def observation_space(self, params):
-        return spaces.Box(
-            low=-jnp.inf,
-            high=jnp.inf,
-            shape=(self._env.observation_size,),
-        )
-    
-    def action_space(self, params):
-        return spaces.Box(
-            low=-1.0,
-            high=1.0,
-            shape=(self._env.action_size,),
-        )
 
 class ActorCritic(nn.Module):
     action_dim: Sequence[int]
@@ -63,7 +38,7 @@ class ActorCritic(nn.Module):
         actor_mean = nn.Dense(
             self.action_dim, kernel_init=orthogonal(0.01), bias_init=constant(0.0)
         )(actor_mean)
-        actor_logtstd = self.param('log_std', nn.initializers.zeros, (self.action_dim,))
+        actor_logtstd = self.param("log_std", nn.initializers.zeros, (self.action_dim,))
         pi = distrax.MultivariateNormalDiag(actor_mean, jnp.exp(actor_logtstd))
 
         critic = nn.Dense(
@@ -90,6 +65,7 @@ class Transition(NamedTuple):
     obs: jnp.ndarray
     info: jnp.ndarray
 
+
 def make_train(config):
     config["NUM_UPDATES"] = (
         config["TOTAL_TIMESTEPS"] // config["NUM_STEPS"] // config["NUM_ENVS"]
@@ -99,15 +75,25 @@ def make_train(config):
     )
     env, env_params = BraxGymnaxWrapper(config["ENV_NAME"]), None
     env = LogWrapper(env)
+    env = ClipAction(env)
+    env = VecEnv(env)
+    if config["NORMALIZE_ENV"]:
+        env = NormalizeVecObservation(env)
+        env = NormalizeVecReward(env, config["GAMMA"])
 
     def linear_schedule(count):
-        frac = 1.0 - (count // (config["NUM_MINIBATCHES"] * config["UPDATE_EPOCHS"])) / config["NUM_UPDATES"]
+        frac = (
+            1.0
+            - (count // (config["NUM_MINIBATCHES"] * config["UPDATE_EPOCHS"]))
+            / config["NUM_UPDATES"]
+        )
         return config["LR"] * frac
 
     def train(rng):
-
         # INIT NETWORK
-        network = ActorCritic(env.action_space(env_params).shape[0], activation=config["ACTIVATION"])
+        network = ActorCritic(
+            env.action_space(env_params).shape[0], activation=config["ACTIVATION"]
+        )
         rng, _rng = jax.random.split(rng)
         init_x = jnp.zeros(env.observation_space(env_params).shape)
         network_params = network.init(_rng, init_x)
@@ -117,7 +103,10 @@ def make_train(config):
                 optax.adam(learning_rate=linear_schedule, eps=1e-5),
             )
         else:
-            tx = optax.chain(optax.clip_by_global_norm(config["MAX_GRAD_NORM"]), optax.adam(config["LR"], eps=1e-5))
+            tx = optax.chain(
+                optax.clip_by_global_norm(config["MAX_GRAD_NORM"]),
+                optax.adam(config["LR"], eps=1e-5),
+            )
         train_state = TrainState.create(
             apply_fn=network.apply,
             params=network_params,
@@ -127,7 +116,7 @@ def make_train(config):
         # INIT ENV
         rng, _rng = jax.random.split(rng)
         reset_rng = jax.random.split(_rng, config["NUM_ENVS"])
-        obsv, env_state = jax.vmap(env.reset, in_axes=(0, None))(reset_rng, env_params)
+        obsv, env_state = env.reset(reset_rng, env_params)
 
         # TRAIN LOOP
         def _update_step(runner_state, unused):
@@ -144,7 +133,7 @@ def make_train(config):
                 # STEP ENV
                 rng, _rng = jax.random.split(rng)
                 rng_step = jax.random.split(_rng, config["NUM_ENVS"])
-                obsv, env_state, reward, done, info = jax.vmap(env.step, in_axes=(0,0,0,None))(
+                obsv, env_state, reward, done, info = env.step(
                     rng_step, env_state, action, env_params
                 )
                 transition = Transition(
@@ -270,6 +259,21 @@ def make_train(config):
             train_state = update_state[0]
             metric = traj_batch.info
             rng = update_state[-1]
+            if config.get("DEBUG"):
+
+                def callback(info):
+                    return_values = info["returned_episode_returns"][
+                        info["returned_episode"]
+                    ]
+                    timesteps = (
+                        info["timestep"][info["returned_episode"]] * config["NUM_ENVS"]
+                    )
+                    for t in range(len(timesteps)):
+                        print(
+                            f"global step={timesteps[t]}, episodic return={return_values[t]}"
+                        )
+
+                jax.debug.callback(callback, metric)
 
             runner_state = (train_state, env_state, last_obs, rng)
             return runner_state, metric
@@ -300,7 +304,9 @@ if __name__ == "__main__":
         "MAX_GRAD_NORM": 0.5,
         "ACTIVATION": "tanh",
         "ENV_NAME": "hopper",
-        "ANNEAL_LR": True,
+        "ANNEAL_LR": False,
+        "NORMALIZE_ENV": True,
+        "DEBUG": True,
     }
     rng = jax.random.PRNGKey(30)
     train_jit = jax.jit(make_train(config))
