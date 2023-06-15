@@ -69,6 +69,14 @@ PureJaxRL builds upon other tools in the Jax and RL ecosystems. Check out the fo
 - Jumanji (https://github.com/instadeepai/jumanji)
 - Pgx (https://github.com/sotetsuk/pgx)
 
+The following repositories and projects were pre-cursors to `purejaxrl`:
+
+- [Model-Free Opponent Shaping](https://arxiv.org/abs/2205.01447) (ICML 2022) (https://github.com/luchris429/Model-Free-Opponent-Shaping)
+
+- [Discovered Policy Optimisation](https://arxiv.org/abs/2210.05639) (NeurIPS 2022) (https://github.com/luchris429/discovered-policy-optimisation)
+
+- [Adversarial Cheap Talk](https://arxiv.org/abs/2211.11030) (ICML 2023) (https://github.com/luchris429/adversarial-cheap-talk)
+
 ## Citation
 
 If you use PureJaxRL in your work, please cite the following paper:
