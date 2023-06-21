@@ -6,3 +6,4 @@ distrax
 optax
 flax
 numpy
+brax
