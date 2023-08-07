@@ -187,7 +187,7 @@ def make_train(config):
                     env.step, in_axes=(0, 0, 0, None)
                 )(rng_step, env_state, action, env_params)
                 transition = Transition(
-                    done, action, value, reward, log_prob, last_obs, info
+                    last_done, action, value, reward, log_prob, last_obs, info
                 )
                 runner_state = (train_state, env_state, obsv, done, hstate, rng)
                 return runner_state, transition
@@ -202,33 +202,16 @@ def make_train(config):
             ac_in = (last_obs[np.newaxis, :], last_done[np.newaxis, :])
             _, _, last_val = network.apply(train_state.params, hstate, ac_in)
             last_val = last_val.squeeze(0)
-            last_val = jnp.where(last_done, jnp.zeros_like(last_val), last_val)
-
-            def _calculate_gae(traj_batch, last_val):
-                def _get_advantages(gae_and_next_value, transition):
-                    gae, next_value = gae_and_next_value
-                    done, value, reward = (
-                        transition.done,
-                        transition.value,
-                        transition.reward,
-                    )
-                    delta = reward + config["GAMMA"] * next_value * (1 - done) - value
-                    gae = (
-                        delta
-                        + config["GAMMA"] * config["GAE_LAMBDA"] * (1 - done) * gae
-                    )
-                    return (gae, value), gae
-
-                _, advantages = jax.lax.scan(
-                    _get_advantages,
-                    (jnp.zeros_like(last_val), last_val),
-                    traj_batch,
-                    reverse=True,
-                    unroll=16,
-                )
+            def _calculate_gae(traj_batch, last_val, last_done):
+                def _get_advantages(carry, transition):
+                    gae, next_value, next_done = carry
+                    done, value, reward = transition.done, transition.value, transition.reward 
+                    delta = reward + config["GAMMA"] * next_value * (1 - next_done) - value
+                    gae = delta + config["GAMMA"] * config["GAE_LAMBDA"] * (1 - next_done) * gae
+                    return (gae, value, done), gae
+                _, advantages = jax.lax.scan(_get_advantages, (jnp.zeros_like(last_val), last_val, last_done), traj_batch, reverse=True, unroll=16)
                 return advantages, advantages + traj_batch.value
-
-            advantages, targets = _calculate_gae(traj_batch, last_val)
+            advantages, targets = _calculate_gae(traj_batch, last_val, last_done)
 
             # UPDATE NETWORK
             def _update_epoch(update_state, unused):
