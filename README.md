@@ -12,7 +12,7 @@ PureJaxRL is a high-performance, end-to-end Jax Reinforcement Learning (RL) impl
 
 For more details, visit the accompanying blog post: https://chrislu.page/blog/meta-disco/
 
-This notebook walks through the basic usage: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/luchris429/purejaxrl/blob/main/examples/example_0.ipynb)
+This notebook walks through the basic usage: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/luchris429/purejaxrl/blob/main/examples/walkthrough.ipynb)
 
 ## Performance
 

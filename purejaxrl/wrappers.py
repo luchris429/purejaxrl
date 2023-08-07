@@ -7,6 +7,7 @@ from functools import partial
 from typing import Optional, Tuple, Union, Any
 from gymnax.environments import environment, spaces
 from brax import envs
+from brax.envs.wrappers.training import EpisodeWrapper, AutoResetWrapper
 
 
 class GymnaxWrapper(object):
@@ -115,8 +116,8 @@ class LogWrapper(GymnaxWrapper):
 class BraxGymnaxWrapper:
     def __init__(self, env_name, backend="positional"):
         env = envs.get_environment(env_name=env_name, backend=backend)
-        env = envs.wrapper.EpisodeWrapper(env, episode_length=1000, action_repeat=1)
-        env = envs.wrapper.AutoResetWrapper(env)
+        env = EpisodeWrapper(env, episode_length=1000, action_repeat=1)
+        env = AutoResetWrapper(env)
         self._env = env
         self.action_size = env.action_size
         self.observation_size = (env.observation_size,)
