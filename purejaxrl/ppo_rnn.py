@@ -167,9 +167,9 @@ def make_train(config):
                     env.step, in_axes=(0, 0, 0, None)
                 )(rng_step, env_state, action, env_params)
                 transition = Transition(
-                    done, action, value, reward, log_prob, last_obs, info
+                    last_done, action, value, reward, log_prob, last_obs, info
                 )
-                runner_state = (train_state, env_state, obsv, last_done, hstate, rng)
+                runner_state = (train_state, env_state, obsv, done, hstate, rng)
                 return runner_state, transition
 
             initial_hstate = runner_state[-2]
