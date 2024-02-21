@@ -7,3 +7,5 @@ optax
 flax
 numpy
 brax
+wandb
+flashbax
