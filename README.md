@@ -62,12 +62,19 @@ The following improvements are planned for the PureJaxRL repository:
 
 PureJaxRL builds upon other tools in the Jax and RL ecosystems. Check out the following projects:
 
-- Gymnax (https://github.com/RobertTLange/gymnax)
-- Evosax (https://github.com/RobertTLange/evosax)
-- CleanRL (https://github.com/vwxyzjn/cleanrl)
-- Brax (https://github.com/google/brax)
-- Jumanji (https://github.com/instadeepai/jumanji)
-- Pgx (https://github.com/sotetsuk/pgx)
+- [Gymnax](https://github.com/RobertTLange/gymnax)
+- [Evosax](https://github.com/RobertTLange/evosax)
+- [CleanRL](https://github.com/vwxyzjn/cleanrl)
+- [Brax](https://github.com/google/brax)
+- [Jumanji](https://github.com/instadeepai/jumanji)
+- [Pgx](https://github.com/sotetsuk/pgx)
+
+The following repos are related to PureJaxRL and expand its usage!
+
+- [JaxMARL](https://github.com/FLAIROx/JaxMARL)
+- [JAX-CORL](https://github.com/nissymori/JAX-CORL)
+- [JaxIRL](https://github.com/FLAIROx/jaxirl)
+- [POPJym](https://github.com/luchris429/popjaxrl)
 
 The following repositories and projects were pre-cursors to `purejaxrl`:
 
