@@ -8,7 +8,7 @@ from typing import Sequence, NamedTuple, Any
 from flax.training.train_state import TrainState
 import distrax
 import gymnax
-from wrappers import LogWrapper, FlattenObservationWrapper
+from wrappers import LogWrapper, FlattenObservationWrapper, NavixGymnaxWrapper
 
 
 class ActorCritic(nn.Module):
@@ -66,7 +66,7 @@ def make_train(config):
     config["MINIBATCH_SIZE"] = (
         config["NUM_ENVS"] * config["NUM_STEPS"] // config["NUM_MINIBATCHES"]
     )
-    env, env_params = gymnax.make(config["ENV_NAME"])
+    env, env_params = NavixGymnaxWrapper(config["ENV_NAME"]), None
     env = FlattenObservationWrapper(env)
     env = LogWrapper(env)
 
@@ -85,6 +85,7 @@ def make_train(config):
         )
         rng, _rng = jax.random.split(rng)
         init_x = jnp.zeros(env.observation_space(env_params).shape)
+        import pdb; pdb.set_trace()
         network_params = network.init(_rng, init_x)
         if config["ANNEAL_LR"]:
             tx = optax.chain(
@@ -276,11 +277,11 @@ def make_train(config):
 if __name__ == "__main__":
     config = {
         "LR": 2.5e-4,
-        "NUM_ENVS": 4,
+        "NUM_ENVS": 16,
         "NUM_STEPS": 128,
-        "TOTAL_TIMESTEPS": 5e5,
-        "UPDATE_EPOCHS": 4,
-        "NUM_MINIBATCHES": 4,
+        "TOTAL_TIMESTEPS": 1e6,
+        "UPDATE_EPOCHS": 1,
+        "NUM_MINIBATCHES": 8,
         "GAMMA": 0.99,
         "GAE_LAMBDA": 0.95,
         "CLIP_EPS": 0.2,
@@ -288,7 +289,7 @@ if __name__ == "__main__":
         "VF_COEF": 0.5,
         "MAX_GRAD_NORM": 0.5,
         "ACTIVATION": "tanh",
-        "ENV_NAME": "CartPole-v1",
+        "ENV_NAME": "Navix-DoorKey-5x5-v0",
         "ANNEAL_LR": True,
         "DEBUG": True,
     }
