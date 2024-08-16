@@ -34,11 +34,13 @@ If you find this resource useful, please *star* the repo! It helps establish and
 
 - [jym](https://github.com/rpegoud/jym) - Educational and beginner-friendly end-to-end JAX RL training. <img src="https://img.shields.io/github/stars/rpegoud/jym?style=social" align="center">
 
-### Standard RL in JAX
+### Jax RL (But Not End-to-End) Repos
 
 - [cleanrl](https://github.com/vwxyzjn/cleanrl) - Clean implementations of RL Algorithms (in both PyTorch and JAX!). <img src="https://img.shields.io/github/stars/vwxyzjn/cleanrl?style=social" align="center">
 
 - [jaxrl](https://github.com/ikostrikov/jaxrl) - JAX implementation of algorithms for Deep Reinforcement Learning with continuous action spaces. <img src="https://img.shields.io/github/stars/ikostrikov/jaxrl?style=social" align="center">
+
+- [rlbase](https://github.com/kvfrans/rlbase_stable) - Single-file JAX implementations of Deep RL algorithms. <img src="https://img.shields.io/github/stars/kvfrans/rlbase_stable?style=social" align="center">
 
 ### Multi-Agent RL
 
@@ -75,6 +77,8 @@ If you find this resource useful, please *star* the repo! It helps establish and
 - [groove](https://github.com/EmptyJackson/groove) - Library for [LPG-like](https://arxiv.org/abs/2007.08794) meta-RL in Pure JAX. <img src="https://img.shields.io/github/stars/EmptyJackson/groove?style=social" align="center">
 
 - [discovered-policy-optimisation](https://github.com/luchris429/discovered-policy-optimisation) - Library for [LPO](https://arxiv.org/abs/2210.05639) meta-RL in Pure JAX. <img src="https://img.shields.io/github/stars/luchris429/discovered-policy-optimisation?style=social" align="center">
+
+- [rl-learned-optimization](https://github.com/AlexGoldie/rl-learned-optimization) - Library for [OPEN](https://arxiv.org/abs/2407.07082) in Pure JAX. <img src="https://img.shields.io/github/stars/AlexGoldie/rl-learned-optimization?style=social" align="center">
 
 ## Environments
 
