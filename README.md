@@ -14,6 +14,8 @@ For more details, visit the accompanying blog post: https://chrislu.page/blog/me
 
 This notebook walks through the basic usage: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/luchris429/purejaxrl/blob/main/examples/walkthrough.ipynb)
 
+## CHECK OUT [RESOURCES.MD](https://github.com/luchris429/purejaxrl/blob/main/RESOURCES.md) to see github repos that are part of the Jax RL Ecosystem!
+
 ## Performance
 
 Without vectorization, our implementation runs 10x faster than [CleanRL's PyTorch baselines](https://github.com/vwxyzjn/cleanrl/blob/master/cleanrl/ppo.py), as shown in the single-thread performance plot.
@@ -50,31 +52,9 @@ In order to use JAX on your accelerators, you can find more details in the [JAX 
 
 [`examples/brax_minatar.ipynb`](https://github.com/luchris429/purejaxrl/blob/main/examples/brax_minatar.ipynb) walks through using PureJaxRL for Brax and MinAtar. [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/luchris429/purejaxrl/blob/main/examples/brax_minatar.ipynb)
 
-## TODOs
-
-The following improvements are planned for the PureJaxRL repository:
-
-1. More memory-efficient logging
-2. Integration with Weights & Biases (WandB) for experiment tracking
-3. Connecting to non-Jax environments like envpool
-
 ## Related Work
 
-PureJaxRL builds upon other tools in the Jax and RL ecosystems. Check out the following projects:
-
-- [Gymnax](https://github.com/RobertTLange/gymnax)
-- [Evosax](https://github.com/RobertTLange/evosax)
-- [CleanRL](https://github.com/vwxyzjn/cleanrl)
-- [Brax](https://github.com/google/brax)
-- [Jumanji](https://github.com/instadeepai/jumanji)
-- [Pgx](https://github.com/sotetsuk/pgx)
-
-The following repos are related to PureJaxRL and expand its usage!
-
-- [JaxMARL](https://github.com/FLAIROx/JaxMARL)
-- [JAX-CORL](https://github.com/nissymori/JAX-CORL)
-- [JaxIRL](https://github.com/FLAIROx/jaxirl)
-- [POPJym](https://github.com/luchris429/popjaxrl)
+Check out the list of [RESOURCES](https://github.com/luchris429/purejaxrl/blob/main/RESOURCES.md) to see libraries that are closely related to PureJaxRL!
 
 The following repositories and projects were pre-cursors to `purejaxrl`:
 
