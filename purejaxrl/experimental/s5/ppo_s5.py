@@ -8,7 +8,7 @@ from typing import Sequence, NamedTuple, Any, Dict
 from flax.training.train_state import TrainState
 import distrax
 import gymnax
-from wrappers import FlattenObservationWrapper, LogWrapper
+from purejaxrl.wrappers import FlattenObservationWrapper, LogWrapper
 from gymnax.environments import spaces
 from s5 import init_S5SSM, make_DPLR_HiPPO, StackedEncoderModel
 

@@ -8,7 +8,7 @@ from typing import Sequence, NamedTuple, Any
 from flax.training.train_state import TrainState
 import distrax
 import gymnax
-from wrappers import LogWrapper, FlattenObservationWrapper, NavixGymnaxWrapper
+from purejaxrl.wrappers import LogWrapper, FlattenObservationWrapper, NavixGymnaxWrapper
 
 
 class ActorCritic(nn.Module):

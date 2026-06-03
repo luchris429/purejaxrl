@@ -15,7 +15,7 @@ from flax.linen.initializers import constant, orthogonal
 from typing import Sequence, NamedTuple, Any
 from flax.training.train_state import TrainState
 import distrax
-from wrappers import (
+from purejaxrl.wrappers import (
     LogWrapper,
     BraxGymnaxWrapper,
     VecEnv,

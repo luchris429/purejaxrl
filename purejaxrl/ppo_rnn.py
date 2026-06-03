@@ -11,7 +11,7 @@ import distrax
 import gymnax
 import functools
 from gymnax.environments import spaces
-from wrappers import FlattenObservationWrapper, LogWrapper
+from purejaxrl.wrappers import FlattenObservationWrapper, LogWrapper
 
 
 class ScannedRNN(nn.Module):
