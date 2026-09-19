@@ -34,6 +34,8 @@ If you find this resource useful, please *star* the repo! It helps establish and
 
 - [jym](https://github.com/rpegoud/jym) - Educational and beginner-friendly end-to-end JAX RL training. <img src="https://img.shields.io/github/stars/rpegoud/jym?style=social" align="center">
 
+- [Ajents](https://github.com/onnoeberhard/ajents) - Minimal single-file `flax.nnx`-based implementations of PPO and SAC. <img src="https://img.shields.io/github/stars/onnoeberhard/ajents?style=social" align="center">
+
 ### Jax RL (But Not End-to-End) Repos
 
 - [cleanrl](https://github.com/vwxyzjn/cleanrl) - Clean implementations of RL Algorithms (in both PyTorch and JAX!). <img src="https://img.shields.io/github/stars/vwxyzjn/cleanrl?style=social" align="center">
